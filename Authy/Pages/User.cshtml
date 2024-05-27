@@ -1,0 +1,26 @@
+﻿@page
+@model Authy.Pages.UserModel
+@{
+}
+
+<h2 class="text-center">Account Details</h2>
+
+<div>
+    First Name : @Model.ApplicationUser?.FirstName
+</div>
+
+<div>
+    Last Name : @Model.ApplicationUser?.LastName
+</div>
+
+<div>
+    Email : @Model.ApplicationUser?.Email
+</div>
+
+<div>
+    Address : @Model.ApplicationUser?.Address
+</div>
+
+<div>
+    Created At : @Model.ApplicationUser?.CreatedAt.ToString("MM/dd/yyyy")
+</div>
