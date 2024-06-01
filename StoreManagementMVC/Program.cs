@@ -1,15 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using StoreManagementMVC.Repositories;
 using StoreManagementMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-var config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    var connectionString = config.GetConnectionString("ApplicationDbContext");
+    var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContext");
     options.UseSqlServer(connectionString);
 });
 

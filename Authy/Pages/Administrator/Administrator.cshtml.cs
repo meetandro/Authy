@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Authy.Pages
+namespace Authy.Pages.Administrator
 {
-    [Authorize(Roles = "Administrator,Seller")]
-    public class SellerModel : PageModel
+    [Authorize(Roles = "Administrator")]
+    public class AdministratorModel : PageModel
     {
         public void OnGet()
         {

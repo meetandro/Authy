@@ -38,9 +38,11 @@
             <td><img src="/products/@product.ImageFileName" width="100" /></td>
             <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
             <td style="white-space: nowrap">
-                <a class="btn btn-primary btn-sm" asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
-                <form asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" method="post">
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirm?')">Delete</button>
+                <form class="d-inline" asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id" method="get">
+                    <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                </form>
+                <form class="d-inline" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirm?')">Delete</button>
                 </form>
             </td>
         </tr>

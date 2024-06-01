@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authy", "Authy\Authy.csproj", "{8E148D5E-B68B-471C-A96B-940BC06AA9DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagementRazor", "StoreManagementRazor\StoreManagementRazor.csproj", "{C4AF427A-0A0B-4785-A69C-D09A1FD9EFB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreManagementRazor", "StoreManagementRazor\StoreManagementRazor.csproj", "{C4AF427A-0A0B-4785-A69C-D09A1FD9EFB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagementMVC", "StoreManagementMVC\StoreManagementMVC.csproj", "{8B78E058-B839-450A-9563-6F5375FE176A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagementMVC", "StoreManagementMVC\StoreManagementMVC.csproj", "{1070527B-078C-417A-8DD6-A26C8F447E6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{C4AF427A-0A0B-4785-A69C-D09A1FD9EFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4AF427A-0A0B-4785-A69C-D09A1FD9EFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4AF427A-0A0B-4785-A69C-D09A1FD9EFB5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B78E058-B839-450A-9563-6F5375FE176A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B78E058-B839-450A-9563-6F5375FE176A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B78E058-B839-450A-9563-6F5375FE176A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B78E058-B839-450A-9563-6F5375FE176A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1070527B-078C-417A-8DD6-A26C8F447E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1070527B-078C-417A-8DD6-A26C8F447E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1070527B-078C-417A-8DD6-A26C8F447E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1070527B-078C-417A-8DD6-A26C8F447E6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

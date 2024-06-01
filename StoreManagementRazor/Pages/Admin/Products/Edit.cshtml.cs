@@ -5,10 +5,9 @@ using StoreManagementRazor.Services;
 
 namespace StoreManagementRazor.Pages.Admin.Products
 {
-    public class EditModel(IWebHostEnvironment environment, ApplicationDbContext context) : PageModel
+    public class EditModel(IProductsService productsService) : PageModel
     {
-        private readonly IWebHostEnvironment _environment = environment;
-        private readonly ApplicationDbContext _context = context;
+        private readonly IProductsService _productsService = productsService;
 
         [BindProperty]
         public ProductDto ProductDto { get; set; } = new();
@@ -26,7 +25,7 @@ namespace StoreManagementRazor.Pages.Admin.Products
                 return;
             }
 
-            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            var product = _productsService.GetProductById((int)id);
             if (product is null)
             {
                 Response.Redirect("/Admin/Products/Index");
@@ -56,37 +55,14 @@ namespace StoreManagementRazor.Pages.Admin.Products
                 return;
             }
 
-            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            var product = _productsService.GetProductById((int)id);
             if (product is null)
             {
                 Response.Redirect("/Admin/Products/Index");
                 return;
             }
 
-            string newFileName = product.ImageFileName;
-            if (ProductDto.ImageFile != null)
-            {
-                newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-                newFileName += Path.GetExtension(ProductDto.ImageFile.FileName);
-
-                string imageFullPath = environment.WebRootPath + "/products/" + newFileName;
-                using (var stream = System.IO.File.Create(imageFullPath))
-                {
-                    ProductDto.ImageFile.CopyTo(stream);
-                }
-
-                string oldImageFullPath = environment.WebRootPath + "/products/" + product.ImageFileName;
-                System.IO.File.Delete(oldImageFullPath);
-            }
-
-            product.Name = ProductDto.Name;
-            product.Brand = ProductDto.Brand;
-            product.Category = ProductDto.Category;
-            product.Price = ProductDto.Price;
-            product.Description = product.Description;
-            product.ImageFileName = newFileName;
-
-            context.SaveChanges();
+            _productsService.EditProduct((int)id, ProductDto);
 
             Product = product;
 

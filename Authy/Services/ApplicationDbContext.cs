@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Authy.Data
+namespace Authy.Services
 {
     public class ApplicationDbContext(DbContextOptions options) : IdentityDbContext<ApplicationUser>(options)
     {

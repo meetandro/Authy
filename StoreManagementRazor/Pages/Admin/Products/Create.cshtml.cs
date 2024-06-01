@@ -5,10 +5,9 @@ using StoreManagementRazor.Services;
 
 namespace StoreManagementRazor.Pages.Admin.Products
 {
-    public class CreateModel(IWebHostEnvironment environment, ApplicationDbContext context) : PageModel
+    public class CreateModel(IProductsService productsService) : PageModel
     {
-        private readonly IWebHostEnvironment _environment = environment;
-        private readonly ApplicationDbContext _context = context;
+        private readonly IProductsService _productsService = productsService;
 
         [BindProperty]
         public ProductDto ProductDto { get; set; } = new();
@@ -33,28 +32,7 @@ namespace StoreManagementRazor.Pages.Admin.Products
                 return;
             }
 
-            string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            newFileName += Path.GetExtension(ProductDto.ImageFile!.FileName);
-
-            string imageFullPath = environment.WebRootPath + "/products/" + newFileName;
-            using (var stream = System.IO.File.Create(imageFullPath))
-            {
-                ProductDto.ImageFile.CopyTo(stream);
-            }
-
-            var product = new Product()
-            {
-                Name = ProductDto.Name,
-                Brand = ProductDto.Brand,
-                Category = ProductDto.Category,
-                Description = ProductDto.Description ?? "",
-                ImageFileName = newFileName,
-                Price = ProductDto.Price,
-                CreatedAt = DateTime.Now,
-            };
-
-            context.Products.Add(product);
-            context.SaveChanges();
+            _productsService.AddProduct(ProductDto);
 
             ProductDto.Name = "";
             ProductDto.Brand = "";

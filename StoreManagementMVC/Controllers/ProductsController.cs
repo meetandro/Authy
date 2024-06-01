@@ -4,16 +4,13 @@ using StoreManagementMVC.Services;
 
 namespace StoreManagementMVC.Controllers
 {
-    public class ProductsController(ApplicationDbContext context, IWebHostEnvironment environment) : Controller
+    public class ProductsController(IProductsService productsService) : Controller
     {
-        private readonly ApplicationDbContext _context = context;
-        private readonly IWebHostEnvironment _environment = environment;
+        private readonly IProductsService _productsService = productsService;
 
         public IActionResult Index()
         {
-            var products = _context.Products
-                .OrderByDescending(p => p.Id)
-                .ToList();
+            var products = _productsService.GetAllProducts();
             return View(products);
         }
 
@@ -35,36 +32,14 @@ namespace StoreManagementMVC.Controllers
                 return View(productDto);
             }
 
-            string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            newFileName += Path.GetExtension(productDto.ImageFile!.FileName);
-
-            string imageFullPath = $"{_environment.WebRootPath}/products/{newFileName}";
-            using (var stream = System.IO.File.Create(imageFullPath))
-            {
-                productDto.ImageFile.CopyTo(stream);
-            }
-
-            var product = new Product()
-            {
-                Name = productDto.Name,
-                Brand = productDto.Brand,
-                Category = productDto.Category,
-                Description = productDto.Description,
-                ImageFileName = newFileName,
-                Price = productDto.Price,
-                CreatedAt = DateTime.Now,
-            };
-
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            _productsService.AddProduct(productDto);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult Edit(int id)
         {
-            var product = _context.Products.FirstOrDefault(p => p.Id == id);
-
+            var product = _productsService.GetProductById(id);
             if (product is null)
             {
                 return RedirectToAction("Index");
@@ -89,8 +64,7 @@ namespace StoreManagementMVC.Controllers
         [HttpPost]
         public IActionResult Edit(int id, ProductDto productDto)
         {
-            var product = _context.Products.FirstOrDefault(p => p.Id == id);
-
+            var product = _productsService.GetProductById(id);
             if (product is null)
             {
                 return RedirectToAction("Index");
@@ -105,32 +79,7 @@ namespace StoreManagementMVC.Controllers
                 return View(productDto);
             }
 
-            string newFileName = product.ImageFileName;
-
-            if (productDto.ImageFile is not null)
-            {
-                newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-                newFileName += Path.GetExtension(productDto.ImageFile.FileName);
-
-                string imageFullPath = $"{_environment.WebRootPath}/products/{newFileName}";
-                using (var stream = System.IO.File.Create(imageFullPath))
-                {
-                    productDto.ImageFile.CopyTo(stream);
-                }
-
-                string oldImageFullPath = $"{_environment.WebRootPath}/products/{product.ImageFileName}";
-                System.IO.File.Delete(oldImageFullPath);
-            }
-
-            product.Name = productDto.Name;
-            product.Brand = productDto.Brand;
-            product.Category = productDto.Category;
-            product.Description = productDto.Description;
-            product.ImageFileName = newFileName;
-            product.Price = productDto.Price;
-
-            _context.Products.Update(product);
-            _context.SaveChanges();
+            _productsService.EditProduct(id, productDto);
 
             return RedirectToAction("Index");
         }
@@ -138,18 +87,13 @@ namespace StoreManagementMVC.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var product = _context.Products.FirstOrDefault(p => p.Id == id);
-
+            var product = _productsService.GetProductById(id);
             if (product is null)
             {
                 return RedirectToAction("Index");
             }
 
-            string imageFullPath = $"{_environment.WebRootPath}/products/{product.ImageFileName}";
-            System.IO.File.Delete(imageFullPath);
-
-            _context.Products.Remove(product);
-            _context.SaveChanges();
+            _productsService.DeleteProduct(product.Id);
 
             return RedirectToAction("Index");
         }

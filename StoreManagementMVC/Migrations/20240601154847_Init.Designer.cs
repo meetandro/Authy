@@ -12,7 +12,7 @@ using StoreManagementMVC.Services;
 namespace StoreManagementMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240530125356_Init")]
+    [Migration("20240601154847_Init")]
     partial class Init
     {
         /// <inheritdoc />

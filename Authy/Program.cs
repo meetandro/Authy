@@ -1,4 +1,4 @@
-using Authy.Data;
+using Authy.Services;
 using Authy.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

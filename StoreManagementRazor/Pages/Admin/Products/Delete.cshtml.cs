@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StoreManagementRazor.Services;
 
 namespace StoreManagementRazor.Pages.Admin.Products
 {
-    public class DeleteModel(IWebHostEnvironment environment, ApplicationDbContext context) : PageModel
+    public class DeleteModel(IProductsService productsService) : PageModel
     {
-        private readonly IWebHostEnvironment _environment = environment;
-        private readonly ApplicationDbContext _context = context;
+        private readonly IProductsService _productsService = productsService;
 
         public void OnGet(int? id)
         {
@@ -17,18 +15,7 @@ namespace StoreManagementRazor.Pages.Admin.Products
                 return;
             }
 
-            var product = _context.Products.FirstOrDefault(p => p.Id == id);
-            if (product is null)
-            {
-                Response.Redirect("/Admin/Products/Index");
-                return;
-            }
-
-            string imageFullPath = environment.WebRootPath + "/products/" + product.ImageFileName;
-            System.IO.File.Delete(imageFullPath);
-
-            context.Products.Remove(product);
-            context.SaveChanges();
+            _productsService.DeleteProduct((int)id);
 
             Response.Redirect("/Admin/Products/Index");
         }
