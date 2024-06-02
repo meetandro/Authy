@@ -15,6 +15,7 @@ namespace StoreManagementRazor.Pages.Admin.Products
         public Product Product { get; set; } = new();
 
         public string errorMessage = "";
+
         public string successMessage = "";
 
         public void OnGet(int? id)

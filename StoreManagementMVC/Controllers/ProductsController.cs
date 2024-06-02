@@ -34,7 +34,7 @@ namespace StoreManagementMVC.Controllers
 
             _productsService.AddProduct(productDto);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(int id)
@@ -42,7 +42,7 @@ namespace StoreManagementMVC.Controllers
             var product = _productsService.GetProductById(id);
             if (product is null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             var productDto = new ProductDto()
@@ -67,7 +67,7 @@ namespace StoreManagementMVC.Controllers
             var product = _productsService.GetProductById(id);
             if (product is null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             if (!ModelState.IsValid)
@@ -81,7 +81,7 @@ namespace StoreManagementMVC.Controllers
 
             _productsService.EditProduct(id, productDto);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -90,12 +90,12 @@ namespace StoreManagementMVC.Controllers
             var product = _productsService.GetProductById(id);
             if (product is null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             _productsService.DeleteProduct(product.Id);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

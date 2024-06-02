@@ -12,12 +12,13 @@ namespace StoreManagementRazor.Pages.Admin.Products
         [BindProperty]
         public ProductDto ProductDto { get; set; } = new();
 
+        public string errorMessage = "";
+
+        public string successMessage = "";
+
         public void OnGet()
         {
         }
-
-        public string errorMessage = "";
-        public string successMessage = "";
 
         public void OnPost()
         {
@@ -34,12 +35,7 @@ namespace StoreManagementRazor.Pages.Admin.Products
 
             _productsService.AddProduct(ProductDto);
 
-            ProductDto.Name = "";
-            ProductDto.Brand = "";
-            ProductDto.Category = "";
-            ProductDto.Price = 0;
-            ProductDto.Description = "";
-            ProductDto.ImageFile = null;
+            ProductDto = new();
 
             ModelState.Clear();
 
