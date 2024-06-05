@@ -1,4 +1,5 @@
-﻿using StoreManagementMVC.Models;
+﻿using StoreManagementMVC.Extensions;
+using StoreManagementMVC.Models;
 using StoreManagementMVC.Repositories;
 
 namespace StoreManagementMVC.Services
@@ -20,18 +21,11 @@ namespace StoreManagementMVC.Services
 
         public Product AddProduct(ProductDto productDto)
         {
-            string imageFileName = _fileService.SaveFileInFolder(productDto.ImageFile, "products");
+            var product = productDto.ToProduct();
 
-            var product = new Product()
-            {
-                Name = productDto.Name,
-                Brand = productDto.Brand,
-                Category = productDto.Category,
-                Description = productDto.Description,
-                ImageFileName = imageFileName,
-                Price = productDto.Price,
-                CreatedAt = DateTime.Now,
-            };
+            string imageFileName = _fileService.SaveFileInFolder(productDto.ImageFile, "products");
+            product.ImageFileName = imageFileName;
+
             _productsRepository.AddProduct(product);
             return product;
         }
@@ -48,12 +42,8 @@ namespace StoreManagementMVC.Services
                 _fileService.DeleteFileInFolder(product.ImageFileName, "products");
             }
 
-            product.Name = productDto.Name;
-            product.Brand = productDto.Brand;
-            product.Category = productDto.Category;
-            product.Description = productDto.Description;
+            product = productDto.ToUpdatedProduct(product);
             product.ImageFileName = imageFileName;
-            product.Price = productDto.Price;
 
             _productsRepository.EditProduct(product);
             return product;

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using StoreManagementRazor.Extensions;
 using StoreManagementRazor.Models;
 using StoreManagementRazor.Services;
 
@@ -33,11 +34,7 @@ namespace StoreManagementRazor.Pages.Admin.Products
                 return;
             }
 
-            ProductDto.Name = product.Name;
-            ProductDto.Brand = product.Brand;
-            ProductDto.Category = product.Category;
-            ProductDto.Description = product.Description;
-            ProductDto.Price = product.Price;
+            ProductDto = product.ToProductDto();
 
             Product = product;
         }

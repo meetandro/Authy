@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StoreManagementMVC.Extensions;
 using StoreManagementMVC.Models;
 using StoreManagementMVC.Services;
 
@@ -33,7 +34,6 @@ namespace StoreManagementMVC.Controllers
             }
 
             _productsService.AddProduct(productDto);
-
             return RedirectToAction(nameof(Index));
         }
 
@@ -45,19 +45,11 @@ namespace StoreManagementMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var productDto = new ProductDto()
-            {
-                Name = product.Name,
-                Brand = product.Brand,
-                Category = product.Category,
-                Description = product.Description,
-                Price = product.Price,
-            };
-
             ViewData["Id"] = product.Id;
             ViewData["CreatedAt"] = product.CreatedAt.ToString("MM/dd/yyyy");
             ViewData["ImageFileName"] = product.ImageFileName;
 
+            var productDto = product.ToProductDto();
             return View(productDto);
         }
 
@@ -80,7 +72,6 @@ namespace StoreManagementMVC.Controllers
             }
 
             _productsService.EditProduct(id, productDto);
-
             return RedirectToAction(nameof(Index));
         }
 
@@ -94,7 +85,6 @@ namespace StoreManagementMVC.Controllers
             }
 
             _productsService.DeleteProduct(product.Id);
-
             return RedirectToAction(nameof(Index));
         }
     }
